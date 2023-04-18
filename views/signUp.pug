@@ -1,4 +1,34 @@
 extends layout
 
 block content
-    p Sign Up Page
+    h1 Sign Up
+
+    form.pageForm(action="/signUp" method="POST")
+        label(for="email") Email: 
+        input(name="emailInput" placeholder="New Email" type="email")
+        
+
+        label(for="password") Password: 
+        input(name="passwordInput" placeholder="New Password" type="password")
+
+        label(for="passwordConfirm") Confirm Password: 
+        input(name="confirmPasswordInput" placeholder="Confirm Password" type="password")
+
+        label(for="first_name") First Name: 
+        input(name="first_nameInput" placeholder="First Name" type="text")
+
+        label(for="last_name") Last Name: 
+        input(name="last_nameInput" placeholder="Last Name" type="text")
+
+        label(for="admin") Admin Permissions?
+        select(name="adminSelect")
+            option(value= "false") False
+            option(value = "true") True 
+
+        button.formButton(id="signUpBtn" type="submit" ) Sign Up
+
+    if errors
+        ul
+            for error in errors
+                li!= error.msg
+

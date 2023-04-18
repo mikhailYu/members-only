@@ -1,5 +1,46 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+
+  div.messageListCont
+    ul.messageUl
+      if messages.length === 0
+        li There are no messages
+      else 
+        for message in messages 
+          div.messageCont
+            if user && user.approved == true
+              div.messageInfo 
+                p.messageUserName #{message.user.first_name} #{message.user.last_name} 
+                p.messageDate #{message.dateFormatted} 
+            div.messageTextCont
+              p.messageTitle #{message.title}
+              p.messageText #{message.text}
+
+            if user && user.admin == "true"
+              form(action="/deleteMessage" method="POST")
+                input(type="hidden" name="messageID" value=message.id) 
+                button.trashBtn(name="deleteMessageButton") Delete Comment             
+    
+
+
+
+  if user
+    div.indexBottomCont 
+      p Welcome #{user.first_name + " " + user.last_name}
+
+
+      if !user.approved
+        p It seems like you're not part of the super secret club. Click here to enter the secret code 
+        a(href="/secretPassword") Enter Secret Code
+      else 
+        a(href="/newMessage") Post New Message
+
+      form(action="/logout" method="POST")
+        button.logoutBtn(id= "logoutBtn" ) Log Out
+  
+  else 
+    div.indexBottomCont
+      p Please sign up or log in.
+      a(href="/signUp") Sign Up 
+      a(href="/login") Login

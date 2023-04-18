@@ -1,4 +1,22 @@
 extends layout
 
 block content
-    p New Message Page
+    if !user
+            p Please log in 
+            a(href="/") Go back 
+    else
+        h1 Write your message: 
+
+        form.pageForm(method="POST" action="/newMessage")
+            label(for="messageTitle") Title: 
+            input(name="messageTitleInput" type="text" placeholder="Message Title" maxLength=50 ) 
+
+            label(for="messageText") Text: 
+            input(name="messageTextInput" type="text" placeholder="Message Text" maxLength= 500 ) 
+
+            button.formButton(name="messageSubmit" ) Submit
+
+        if errors
+            ul
+                for error in errors
+                    li!= error.msg

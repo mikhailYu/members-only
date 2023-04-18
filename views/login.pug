@@ -1,4 +1,13 @@
 extends layout
 
 block content
-    p Login Page
+    h1 Login Page 
+
+    form.pageForm(action="/login" method="POST")
+        label(for="email") Email: 
+        input(name="emailLoginInput" placeholder="Email" type="email")   
+
+        label(for="password") Password: 
+        input(name="passwordLoginInput" placeholder="Password" type="password")   
+        
+        button.formButton(id="loginBtn" type="submit" ) Login 
